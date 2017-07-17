@@ -1,4 +1,18 @@
 {
+  /****************************************************************************
+   * File: collectedCharge.C
+   * Version: 1.0
+   * Author: Ric Rodriguez
+   * Function: Calculates the charge collected by a particle detector
+   * Example usage
+   * ~bash$: root
+   * root[0]: gSystem->Load("TCTAnalyse.sl");
+   * root[1]: .x collectedCharge.C;
+   ****************************************************************************/
+
+
+	#define FILEPATH "Run32.rtct"
+
   double board_resistance = 2.5e9;
   double board_gain = 680;
   double detector_gain = 30;
