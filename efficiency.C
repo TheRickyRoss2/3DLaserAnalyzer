@@ -11,18 +11,19 @@
    ****************************************************************************/
 
   #define PATH "../Downloads/Run14_HPK80D_KU_IR.rtct"
-  #define PADLENGTH 3000
-  #define METALLENGTH 1500
-  #define MIPSPMAX 0.1
+  #define PAD_LENGTH 3000
+  #define METAL_LENGTH 1500
+  #define NO_PADS 2
+  #define MIP_PMAX 100
+  #define FOCAL_LENGTH 100
 
   char * file = (char *) PATH;
 
   PSTCT * meas;
   meas = new PSTCT(file,0,2);
   int i=0,j=0;
-  double hitArea = (PADLENGTH*PADLENGTH)-(METALLENGTH*METALLENGTH);
-  double expectedTotalVout= MIPSPMAX*hitArea;
-  std::cout << expectedTotalVout <<std::endl;
+  double hitArea = (PAD_LENGTH/FOCAL_LENGTH*PAD_LENGTH/FOCAL_LENGTH)-(METAL_LENGTH/FOCAL_LENGTH*METAL_LENGTH/FOCAL_LENGTH);
+  double expectedTotalVout= 2*MIP_PMAX*hitArea;
   double totalVout=0;
 
   for(i=0;i<meas->Nx;i++){
