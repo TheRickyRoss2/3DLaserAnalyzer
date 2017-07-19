@@ -11,7 +11,7 @@
    ****************************************************************************/
 
 
-	#define FILEPATH "../Downloads/Run14_HPK80D_KU_IR.rtct"
+	#define FILEPATH "../Downloads/Run52_HPK80D_KU_IR.rtct"
 
   int i=0, j=0, k=0;
   char * file = (char *) FILEPATH;
@@ -33,9 +33,9 @@
       t1->GetXaxis()->SetRange(82*meas->NP/t1->GetXaxis()->GetXmax(), 97*meas->NP/t1->GetXaxis()->GetXmax());
       int min2 = t1->GetMinimum();
       if(min1<min2){
-        t2->SetPoint(k, meas->dx*i, meas->dy*j, min1);
+        t2->SetPoint(k, meas->x0+meas->dx*i, meas->y0+meas->dy*j, min1);
       }else{
-        t2->SetPoint(k, meas->dx*i, meas->dy*j, min2);
+        t2->SetPoint(k, meas->x0+meas->dx*i, meas->y0+meas->dy*j, min2);
       }
       k++;
     }
