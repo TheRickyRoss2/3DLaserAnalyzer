@@ -11,10 +11,7 @@
    ****************************************************************************/
 
 
-	#define FILEPATH "Run32.rtct"
-
-  double board_resistance = 2.5e9;
-  double board_gain = 680;
+  double transimpedance = 30e3;
   double detector_gain = 30;
   char * file = (char *) "Run14_HPK80D_KU_IR.rtct";
 
@@ -32,11 +29,11 @@
   for(i=0;i<meas->Nx;i++){
     for(j=0;j<meas->Ny;j++){
       TH1F * t1;
-      t1 = meas->GetHA(0, i, j, 0, 0, 0);
-      t1->GetXaxis()->SetRange(82*meas->NP/t1->GetXaxis()->GetXmax(), 97*meas->NP/t1->GetXaxis()->GetXmax());
-      double min1 = -1*t1->Integral()/(1000*R);
       t1 = meas->GetHA(1, i, j, 0, 0, 0);
-      t1->GetXaxis()->SetRange(82*meas->NP/t1->GetXaxis()->GetXmax(), 97*meas->NP/t1->GetXaxis()->GetXmax());
+      t1->GetXaxis()->SetRange(80*meas->NP/t1->GetXaxis()->GetXmax(), 110*meas->NP/t1->GetXaxis()->GetXmax());
+      double min1 = -1*t1->Integral()/(1000*R);
+      t1 = meas->GetHA(2, i, j, 0, 0, 0);
+      t1->GetXaxis()->SetRange(82*meas->NP/t1->GetXaxis()->GetXmax(), 110*meas->NP/t1->GetXaxis()->GetXmax());
       double min2 = -1*t1->Integral()/(1000*R);
       if(min1>min2){
         t2->SetPoint(k, meas->dx*i, meas->dy*j, min1);

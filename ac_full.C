@@ -11,13 +11,13 @@
    ****************************************************************************/
 
 
-	#define FILEPATH "../Downloads/sample.rtct"
-	#define CHANNEL 3
+	#define FILEPATH "../Downloads/Run138_CNM_AC_N_PAD.rtct"
 
   int i=0, j=0, k=0;
   char * file = (char *) FILEPATH;
   PSTCT * meas;
   meas = new PSTCT(file,0,2);
+  meas->CorrectBaseLine(80);
   meas->PrintInfo();
 
   TGraph2D * t2 = new TGraph2D(meas->Nx*meas->Ny);
@@ -27,19 +27,24 @@
   for(i=0;i<meas->Nx;i++){
     for(j=0;j<meas->Ny;j++){
       TH1F * t1;
-      t1 = meas->GetHA(CHANNEL, i, j, 0);
-      t2->SetPoint(k, meas->Nx-i-j/10., j, -1*t1->GetMinimum());
+      t1 = meas->GetHA(0, i, j, 0, 0, 0);
+      t1->GetXaxis()->SetRange(60*meas->NP/t1->GetXaxis()->GetXmax(), 140*meas->NP/t1->GetXaxis()->GetXmax());
+      t2->SetPoint(k, i*meas->dx+meas->x0, meas->y0+meas->dy*j, t1->GetMaximum());
+      /*
+      if(point1>point2){
+        t2->SetPoint(k, i*meas->dx+meas->x0, meas->y0+meas->dy*j, min1);
+      }else{
+        t2->SetPoint(k, i*meas->dx+meas->x0, meas->y0+meas->dy*j, min2);
+      }
+      */
       k++;
     }
   }
   TCanvas *c1 = new TCanvas("c1", "FullScan", 0, 0, 1000, 1000);
   gStyle->SetPalette(kBird);
-  t2->SetMarkerStyle(20);
-  t2->GetHistogram()->GetXaxis()->SetTitle("X-Axis Position [um]");
-  t2->GetHistogram()->GetYaxis()->SetTitle("Y-Axis Position [um]");
-  t2->GetHistogram()->GetZaxis()->SetTitle("Signal Amplitude [mV]");
-  t2->GetHistogram()->SetTitle("Detector: W4-AC2, 3 Pixels, Strip #2 connected, rest grounded. Reading Strip. Bias=200V. TCT Laser: 38% 1kHz");
-
-  t2->Draw("COLZ"); // can also use "SURF2Z"
+  //t2->GetXaxis()->SetTitle("Scan-axis position [um]");
+  //t2->GetYaxis()->SetTitle("Signal Amplitude [mV]");
+  t2->Draw("COLZ");
+  t2->GetHistogram()->SetTitle("Scan of detector voltage vs position; x-axis position [um]; y-axis position[um]; Signal Amplitude[mV]")
 
 }
